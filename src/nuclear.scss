@@ -1,0 +1,156 @@
+// classes are first generated unprefixed,
+// and then again for each breakpoint/corresponding prefix,
+// favoring mobile-first development
+
+$breakpoints: (
+  "t": "768px",     // tablet
+  "d": "1024px"     // desktop
+);
+
+// keys/values that appear in the compiled CSS are wrapped in quotes,
+// to allow for the inclusion of numbers
+
+$nuclear: (
+  "align-items": (
+    prefix: "ai",
+    values: (
+      "b":  "baseline",
+      "c":  "center",
+      "fe": "flex-end",
+      "fs": "flex-start",
+      "s":  "stretch"
+    )
+  ),
+
+  "background-image": (
+    prefix: "bi",
+    values: (
+      "n": "none"
+    )
+  ),
+
+  "background-position": (
+    prefix: "bp",
+    values: (
+      "c": "center"
+    )
+  ),
+
+  "background-repeat": (
+    prefix: "br",
+    values: (
+      "n": "no-repeat"
+    )
+  ),
+
+  "background-size": (
+    prefix: "bs",
+    values: (
+      "c": "cover"
+    )
+  ),
+
+  "cursor": (
+    prefix: "c",
+    values: (
+      "p": "pointer"
+    )
+  ),
+
+  "display": (
+    prefix: "d",
+    values: (
+      "b": "block",
+      "f": "flex",
+      "n": "none"
+    )
+  ),
+
+  "flex-direction": (
+    prefix: "fd",
+    values: (
+      "c":  "column",
+      "cr": "column-reverse",
+      "r":  "row",
+      "rr": "row-reverse"
+    )
+  ),
+
+  "flex-wrap": (
+    prefix: "fw",
+    values: (
+      "n":  "no-wrap",
+      "w":  "wrap",
+      "wr": "wrap-reverse"
+    )
+  ),
+
+  "float": (
+    prefix: "f",
+    values: (
+      "l": "left",
+      "n": "none",
+      "r": "right"
+    )
+  ),
+
+  "justify-content": (
+    prefix: "jc",
+    values: (
+      "c":  "center",
+      "fe": "flex-end",
+      "fs": "flex-start",
+      "sa": "space-around",
+      "sb": "space-between"
+    )
+  ),
+
+  "position": (
+    prefix: "p",
+    values: (
+      "a": "absolute",
+      "r": "relative",
+      "s": "static"
+    )
+  ),
+
+  "text-align": (
+    prefix: "ta",
+    values: (
+      "c": "center",
+      "l": "left",
+      "r": "right"
+    )
+  ),
+
+  "text-transform": (
+    prefix: "tt",
+    values: (
+      "u": "uppercase"
+    )
+  )
+);
+
+// mobile classes generation
+
+@each $prop, $config in $nuclear {
+  @each $prefix, $value in map-get($config, "values") {
+    .#{ map-get($config, "prefix") }#{ $prefix } {
+      #{ $prop }: #{ $value };
+    }
+  }
+}
+
+// breakpoint classes generation
+
+@each $label, $size in $breakpoints {
+  @media screen and (min-width: $size) {
+    @each $prop, $config in $nuclear {
+      @each $prefix, $value in map-get($config, "values") {
+        .#{ $label }-#{ map-get($config, "prefix") }#{ $prefix } {
+          #{ $prop }: #{ $value };
+        }
+      }
+    }
+  }
+}
